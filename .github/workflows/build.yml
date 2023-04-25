@@ -312,19 +312,6 @@ jobs:
           mkdir -p ready
           tar -zcf ready/dep_root-${{ matrix.os }}-${{ matrix.arch }}.tgz dep_root
 
-      - name: Upload artifact
-        if: ${{ github.event_name != 'pull_request' }}
-        uses: wangyucode/sftp-upload-action@v1.4.8
-        with:
-          host: ${{ secrets.NICKCHAN_FTP_HOST }}
-          port: ${{ secrets.NICKCHAN_FTP_PORT }}
-          username: palera1n
-          privateKey: ${{ secrets.NICKCHAN_FTP_KEY }}
-          forceUpload: true
-          dryRun: false
-          localDir: 'ready/'
-          remoteDir: '/palera1n/artifacts/c-rewrite'
-
       - name: Upload ${{ matrix.os }} thin ${{ matrix.arch }} build
         if: ${{ github.event_name != 'pull_request' }}
         uses: actions/upload-artifact@v3
@@ -448,19 +435,6 @@ jobs:
           dpkg-deb -Zzstd -b stage palera1n_iphoneos-arm64.deb
           mv palera1n*.deb ready/
           rm -rf stage
-
-      - name: Upload artifact
-        if: ${{ github.event_name != 'pull_request' }}
-        uses: wangyucode/sftp-upload-action@v1.4.8
-        with:
-          host: ${{ secrets.NICKCHAN_FTP_HOST }}
-          port: ${{ secrets.NICKCHAN_FTP_PORT }}
-          username: palera1n
-          privateKey: ${{ secrets.NICKCHAN_FTP_KEY }}
-          forceUpload: true
-          dryRun: false
-          localDir: 'ready/'
-          remoteDir: '/palera1n/artifacts/c-rewrite'
 
   build-Linux:
     strategy:
@@ -757,16 +731,3 @@ jobs:
           dpkg-deb -b stage palera1n_${{ env.ARCH_NAME }}.deb
           mv palera1n*.deb ready/
           rm -rf stage
-
-      - name: Upload artifact
-        if: ${{ github.event_name != 'pull_request' }}
-        uses: wangyucode/sftp-upload-action@v1.4.8
-        with:
-          host: ${{ secrets.NICKCHAN_FTP_HOST }}
-          port: ${{ secrets.NICKCHAN_FTP_PORT }}
-          username: palera1n
-          privateKey: ${{ secrets.NICKCHAN_FTP_KEY }}
-          forceUpload: true
-          dryRun: false
-          localDir: 'ready/'
-          remoteDir: '/palera1n/artifacts/c-rewrite'
